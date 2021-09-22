@@ -18,12 +18,12 @@ class IkSolver():
         )
 
         # Create data required by the algorithms
-        (
-            self.model, self.collision_model, self.visual_model
-        ) = pinocchio.buildModelsFromUrdf(urdf_path, '')
-        (
-            self.data, self.collision_data, self.visual_data
-        ) = pinocchio.createDatas(self.model, self.collision_model, self.visual_model)
+        self.model, self.collision_model, self.visual_model = (
+            pinocchio.buildModelsFromUrdf(urdf_path, '')
+        )
+        self.data, self.collision_data, self.visual_data = (
+            pinocchio.createDatas(self.model, self.collision_model, self.visual_model)
+        )
 
     def inverse_kinematics(self, q, link_name, ee_pos):
         """
