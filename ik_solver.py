@@ -42,6 +42,7 @@ class IkSolver():
             err = pinocchio.log(dMi).vector[:3]
 
             if np.linalg.norm(err) < EPS:
+                print("Pinnochio joints: ", q, "\n")
                 return q
 
             J = pinocchio.computeFrameJacobian(

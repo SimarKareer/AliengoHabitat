@@ -10,7 +10,7 @@ class AliengoIkSolver(IkSolver):
         return simToBullet
     
     def habitatToPinnochio(self, habitatJoints):
-        pinnochioJoints = np.ones(16)
+        pinnochioJoints = np.ones(16) * 0.6
         for i in range(len(habitatJoints)):
             pinnochioJoints[self.habitatToPinnochioD[i]] = habitatJoints[i]
 

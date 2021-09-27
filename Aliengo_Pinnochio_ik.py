@@ -150,7 +150,8 @@ def main(make_video=True, show_video=True):
             # pose[6] = -1
             robot_id.joint_positions = pose
             print("joint_positions after moving stuff", robot_id.joint_positions)
-
+            observations += simulate(sim, dt=1.5, get_frames=make_video)
+            
             rest_positions = {
                 k: np.array([0.2399, 0.134, -0.4]) * reflect
                 for k, reflect in zip(
@@ -161,13 +162,17 @@ def main(make_video=True, show_video=True):
                     ],
                 )
             }
+            rest_positions = {
+                "FL_foot": np.array([0.2399, 0.134, -0.4])
+            }
             neg = 1
             for link_name, rest in rest_positions.items():
                 for _ in range(4):
                     for _ in range(30):
                         rest -= np.array([0., 0., -0.01*neg])
-                        # q = ik_solver.inverse_kinematics(q, link_name, rest)
-                        robot_id.joint_positions = ik.inverse_kinematics(robot_id.joint_positions, link_name, rest)
+                        q = ik.inverse_kinematics(robot_id.joint_positions, link_name, rest)
+                        # print("Sim Joints", q, "\n")
+                        robot_id.joint_positions = q
                         observations += simulate(sim, dt=0.02, get_frames=make_video)
                     neg *= -1
 
